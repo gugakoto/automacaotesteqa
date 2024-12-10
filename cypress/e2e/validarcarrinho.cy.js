@@ -1,22 +1,27 @@
+import { elementsBusca } from "../support/pageObjects/busca/elements";
+import { elementsCart } from "../support/pageObjects/carrinho/elements";
+import { elementsProd } from "../support/pageObjects/produto/elements";
+
 describe("Validar Produtos no Carrinho", () => {
 
     beforeEach(() => {
         cy.visit('https://advantageonlineshopping.com/');
-        cy.get('[id="shoppingCartLink"]').click();
-        cy.get('[class="roboto-bold ng-scope"]').should('contain', 'Your shopping cart is empty');
-        cy.get('[class="logo"]').click();
+        cy.get('.loader').should('not.be.visible');
+        cy.get(elementsCart.botaoCarrinho).click();
+        cy.get(elementsCart.carrinhoVazio).should('contain', 'Your shopping cart is empty');
+        cy.get(elementsCart.botaoHome).click();
         cy.busca("Speaker");
         cy.selecProd();
         cy.addCart();
-        cy.get('[class="logo"]').click();
+        cy.get(elementsCart.botaoHome).click();
         cy.busca("Mice");
         cy.selecProd();
         cy.addCart();
-        cy.get('[class="logo"]').click();
+        cy.get(elementsCart.botaoHome).click();
         cy.busca("Laptop");
         cy.selecProd();
         cy.addCart();
-        cy.get('[id="shoppingCartLink"]').click();
+        cy.get(elementsCart.botaoCarrinho).click();
     });
 
     it("Validar Produtos no Carrinho", () => {
@@ -28,8 +33,8 @@ describe("Validar Produtos no Carrinho", () => {
     it("Validar Botão Editar no Carrinho", () => {
         cy.get('.fixedTableEdgeCompatibility tbody tr:eq(0) td:eq(5)').find('.edit').click();
         cy.url().should('include','product');
-        cy.get('[name="quantity"]').type(2);
-        cy.get('[name="save_to_cart"]').click();
+        cy.get(elementsBusca.barraBusca).type(2);
+        cy.get(elementsProd.botaoAddCart).click();
         cy.url().should('include','shoppingCart');
         cy.validaCart(0, 'LAPTOP','GRAY','2','$1,699.98');
     });

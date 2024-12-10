@@ -1,7 +1,10 @@
+import { elementsProd } from "../support/pageObjects/produto/elements";
+
 describe("Adicionar Produto ao Carrinho", ()=>{
 
     beforeEach(() => {
         cy.visit('https://advantageonlineshopping.com/');
+        cy.get('.loader').should('not.be.visible');
         cy.busca("Speaker");
         cy.selecProd();
     });
@@ -10,13 +13,13 @@ describe("Adicionar Produto ao Carrinho", ()=>{
         cy.addCart();
     });
     it("Adicionar produto com estoque insuficiente", ()=>{
-        cy.get('[name="quantity"]').type(11);
+        cy.get(elementsProd.inputQTDD).type(11);
         cy.addCart()
-        cy.get('[data-ng-class="message._class"]').should('contain', 'Oops! We only have 10 in stock. We updated your order accordingly')
+        cy.get(elementsProd.msgErro).should('contain', 'Oops! We only have 10 in stock. We updated your order accordingly')
     });
 
     it('teste qtdd', ()=>{
-        cy.get('[name="quantity"]').type('lorem');
+        cy.get(elementsProd.inputQTDD).type('lorem');
         cy.addCart()
     });
 });
