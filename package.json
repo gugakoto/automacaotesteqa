@@ -1,5 +1,5 @@
 {
-  "name": "automacaotesteqa",
+  "name": "my-cypress-project",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,12 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "dependencies": {
+  "devDependencies": {
     "cypress": "^13.16.1",
-    "mocha": "^11.0.1"
+    "cypress-cucumber-preprocessor": "^4.3.1"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true,
+    "step_definitions": "cypress/e2e"
   }
 }
